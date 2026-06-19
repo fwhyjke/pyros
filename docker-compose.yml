@@ -1,0 +1,25 @@
+services:
+  pyroscope:
+    image: grafana/pyroscope:latest
+    ports:
+      - "17420:4040"
+    command:
+      - server
+    networks:
+      - ahahaha
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "8732:3000"
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-pyroscope-app
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+    networks:
+      - ahahaha
+
+networks:
+  ahahaha:
